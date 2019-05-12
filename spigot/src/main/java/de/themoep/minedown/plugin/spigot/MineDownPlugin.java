@@ -23,22 +23,26 @@ package de.themoep.minedown.plugin.spigot;
  */
 
 import de.themoep.minedown.MineDown;
+import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public final class MineDownPlugin extends JavaPlugin {
 
+    @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length == 0) {
             return false;
         }
 
-        if ("pong".equals(args[0])) {
+        if ("pong".equalsIgnoreCase(args[0])) {
             if (testPermission(sender, cmd, "minedown.command.pong")) {
                 if (args.length < 2) {
                     return false;
@@ -48,21 +52,27 @@ public final class MineDownPlugin extends JavaPlugin {
                         "sender", sender.getName()
                 ));
             }
-        } else if ("send".equals(args[0])) {
+        } else if ("send".equalsIgnoreCase(args[0])) {
             if (testPermission(sender, cmd, "minedown.command.send")) {
                 if (args.length < 3) {
                     return false;
                 }
                 Player target = getServer().getPlayer(args[1]);
-                if (target != null) {
-                    target.spigot().sendMessage(MineDown.parse(
-                            Arrays.stream(args).skip(1).collect(Collectors.joining(" ")),
-                            "sender", sender.getName(),
-                            "player", target.getName()
-                    ));
+                if (target == null) {
+                    sender.sendMessage("No player with the name " + args[1] + " online!");
+                    return false;
                 }
+                BaseComponent[] message = MineDown.parse(
+                        Arrays.stream(args).skip(1).collect(Collectors.joining(" ")),
+                        "sender", sender.getName(),
+                        "player", target.getName()
+                );
+                target.spigot().sendMessage(message);
+
+                sender.sendMessage("Sent the following message to " + target.getName() + ":");
+                sender.spigot().sendMessage(message);
             }
-        } else if ("broadcast".equals(args[0])) {
+        } else if ("broadcast".equalsIgnoreCase(args[0])) {
             if (testPermission(sender, cmd, "minedown.command.broadcast")) {
                 if (args.length < 2) {
                     return false;
@@ -79,6 +89,19 @@ public final class MineDownPlugin extends JavaPlugin {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        if (args.length == 0) {
+            return Arrays.asList("send", "pong", "broadcast");
+        } else if ("send".equalsIgnoreCase(args[0]) && sender.hasPermission("minedown.command.send")) {
+            return getServer().getOnlinePlayers().stream()
+                    .filter(p -> !(sender instanceof Player) || ((Player) sender).canSee(p))
+                    .map(HumanEntity::getName)
+                    .collect(Collectors.toList());
+        }
+        return super.onTabComplete(sender, command, alias, args);
     }
 
     private boolean testPermission(CommandSender sender, Command cmd, String permission) {

@@ -24,10 +24,13 @@ package de.themoep.minedown.plugin.bungee;
 
 import de.themoep.minedown.MineDown;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.Plugin;
+import net.md_5.bungee.api.plugin.TabExecutor;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -35,14 +38,7 @@ public final class MineDownPlugin extends Plugin {
 
     @Override
     public void onEnable() {
-        getProxy().getPluginManager().registerCommand(this, new Command("minedown", "minedown.command", "md") {
-            @Override
-            public void execute(CommandSender sender, String[] args) {
-                if (!onCommand(sender, args)) {
-                    sender.sendMessage("/"+ getName() + " [send <player>|broadcast|pong] <message>");
-                }
-            }
-        });
+        getProxy().getPluginManager().registerCommand(this, new MineDownCommand());
     }
 
     private boolean onCommand(CommandSender sender, String[] args) {
@@ -50,7 +46,7 @@ public final class MineDownPlugin extends Plugin {
             return false;
         }
 
-        if ("pong".equals(args[0])) {
+        if ("pong".equalsIgnoreCase(args[0])) {
             if (testPermission(sender, "minedown.command.pong")) {
                 if (args.length < 2) {
                     return false;
@@ -60,21 +56,27 @@ public final class MineDownPlugin extends Plugin {
                         "sender", sender.getName()
                 ));
             }
-        } else if ("send".equals(args[0])) {
+        } else if ("send".equalsIgnoreCase(args[0])) {
             if (testPermission(sender, "minedown.command.send")) {
                 if (args.length < 3) {
                     return false;
                 }
                 ProxiedPlayer target = getProxy().getPlayer(args[1]);
-                if (target != null) {
-                    target.sendMessage(MineDown.parse(
-                            Arrays.stream(args).skip(1).collect(Collectors.joining(" ")),
-                            "sender", sender.getName(),
-                            "player", target.getName()
-                    ));
+                if (target == null) {
+                    sender.sendMessage("No player with the name " + args[1] + " online!");
+                    return false;
                 }
+                BaseComponent[] message = MineDown.parse(
+                        Arrays.stream(args).skip(1).collect(Collectors.joining(" ")),
+                        "sender", sender.getName(),
+                        "player", target.getName()
+                );
+                target.sendMessage(message);
+
+                sender.sendMessage("Sent the following message to " + target.getName() + ":");
+                sender.sendMessage(message);
             }
-        } else if ("broadcast".equals(args[0])) {
+        } else if ("broadcast".equalsIgnoreCase(args[0])) {
             if (testPermission(sender, "minedown.command.broadcast")) {
                 if (args.length < 2) {
                     return false;
@@ -101,5 +103,30 @@ public final class MineDownPlugin extends Plugin {
             return false;
         }
         return true;
+    }
+
+    private class MineDownCommand extends Command implements TabExecutor {
+        public MineDownCommand() {
+            super("minedown", "minedown.command", "md");
+        }
+
+        @Override
+        public void execute(CommandSender sender, String[] args) {
+            if (!onCommand(sender, args)) {
+                sender.sendMessage("/"+ getName() + " [send <player>|broadcast|pong] <message>");
+            }
+        }
+
+        @Override
+        public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
+            if (args.length == 0) {
+                return Arrays.asList("send", "pong", "broadcast");
+            } else if ("send".equalsIgnoreCase(args[0]) && sender.hasPermission("minedown.command.send")) {
+                return getProxy().getPlayers().stream()
+                        .map(ProxiedPlayer::getName)
+                        .collect(Collectors.toList());
+            }
+            return new ArrayList<>();
+        }
     }
 }
