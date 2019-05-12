@@ -1,0 +1,27 @@
+name: MineDownPlugin
+version: '${minecraft.plugin.version}'
+main: de.themoep.minedown.plugin.spigot.MineDownPlugin
+api-version: 1.13
+author: Phoenix616
+description: '${project.description}'
+website: https://github.com/Phoenix616/MineDownPlugin
+commands:
+  minedown:
+    aliases: ["md"]
+    description: MineDown command.
+    permission: minedown.command
+    usage: /<command> [send <player>|broadcast|pong] <message>
+    permission-message: Missing permission <permission>
+permissions:
+  minedown.command:
+    default: op
+    description: Command permission
+  minedown.command.pong:
+    default: op
+    description: Pong permission
+  minedown.command.send:
+    default: op
+    description: Send permission
+  minedown.command.broadcast:
+    default: op
+    description: Broadcast permission

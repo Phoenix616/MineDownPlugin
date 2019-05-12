@@ -1,0 +1,21 @@
+name: MineDownPlugin
+version: '${minecraft.plugin.version}'
+main: de.themoep.minedown.plugin.bungee.MineDownPlugin
+author: Phoenix616
+description: Plugin providing commands to send MineDown messages
+website: https://github.com/Phoenix616/MineDown
+commands:
+  minedown:
+    aliases: ["md"]
+    description: MineDown command.
+    permission: minedown.command
+    usage: /<command> [send <player>|broadcast|pong] <message>
+permissions:
+  minedown.command:
+    description: Command permission
+  minedown.command.pong:
+    description: Pong permission
+  minedown.command.send:
+    description: Send permission
+  minedown.command.broadcast:
+    description: Broadcast permission
