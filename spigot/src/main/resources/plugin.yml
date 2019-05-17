@@ -10,18 +10,38 @@ commands:
     aliases: ["md"]
     description: MineDown command.
     permission: minedown.command
-    usage: /<command> [send <player>|broadcast|pong] <message>
+    usage: /<command> [send <player>|broadcast|pong] chat|system|actionbar|title <message>
     permission-message: Missing permission <permission>
 permissions:
   minedown.command:
-    default: op
     description: Command permission
   minedown.command.pong:
-    default: op
     description: Pong permission
+  minedown.command.pong.chat:
+    description: Pong chat permission
+  minedown.command.pong.system:
+    description: Pong system permission
+  minedown.command.pong.actionbar:
+    description: Pong actionbar permission
+  minedown.command.pong.title:
+    description: Pong title permission
   minedown.command.send:
-    default: op
     description: Send permission
+  minedown.command.send.chat:
+    description: Send chat permission
+  minedown.command.send.system:
+    description: Send system permission
+  minedown.command.send.actionbar:
+    description: Send actionbar permission
+  minedown.command.send.title:
+    description: Send title permission
   minedown.command.broadcast:
-    default: op
     description: Broadcast permission
+  minedown.command.broadcast.chat:
+    description: Broadcast chat permission
+  minedown.command.broadcast.system:
+    description: Broadcast system permission
+  minedown.command.broadcast.actionbar:
+    description: Broadcast actionbar permission
+  minedown.command.broadcast.title:
+    description: Broadcast title permission

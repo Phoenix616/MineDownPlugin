@@ -18,22 +18,29 @@ The messages can also contain placeholders with the sender or target names.
 
 Here are the possible sub commands:
 
-| Command                       | Description                                       | Placeholders      |
-|-------------------------------|---------------------------------------------------|-------------------|
-| `/md pong <message>`          | Send a MineDown formatted message to the sender   | %sender%          |
-| `/md send <player> <message>` | Send a MineDown formatted message to a player     | %sender% %target% |
-| `/md broadcast <message>`     | Send a MineDown formatted message to every player | %sender%          |
+| Command                                   | Description                                       | Placeholders          |
+|-------------------------------------------|---------------------------------------------------|-----------------------|
+| `/md pong <target> <message>`             | Send a MineDown formatted message to the sender   | %sender%              |
+| `/md send <player>  <target> <message>`   | Send a MineDown formatted message to a player     | %sender% %received%   |
+| `/md broadcast  <target> <message>`       | Send a MineDown formatted message to every player | %sender% %received%   |
+
+`<target>` can be chat, system, actionbar or title. Title will use {SUBTITLE} in the message as the indicator that the 
+text after it will be shown as the subtitle.
 
 ## Permissions
 
 All commands have permissions:
 
-| Permission                    | Description           |
-|-------------------------------|-----------------------|
-| minedown.command              | Command permission    |
-| minedown.command.pong         | Pong permission       |
-| minedown.command.send         | Send permission       |
-| minedown.command.broadcast    | Broadcast permission  |
+| Permission                            | Description                   |
+|---------------------------------------|-------------------------------|
+| minedown.command                      | Command permission            |
+| minedown.command.pong                 | Pong action permission        |
+| minedown.command.send                 | Send action permission        |
+| minedown.command.broadcast            | Broadcast action permission   |
+| minedown.command.<action>.chat        | Chat target permission        |
+| minedown.command.<action>.system      | System target permission      |
+| minedown.command.<action>.actionbar   | Actionbar target permission   |
+| minedown.command.<action>.title       | Title target permission       |
 
 Both commands and permissions are the same on Bungee or Spigot
 
