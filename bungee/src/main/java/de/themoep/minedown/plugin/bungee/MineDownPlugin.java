@@ -185,7 +185,7 @@ public final class MineDownPlugin extends Plugin {
         @Override
         public void execute(CommandSender sender, String[] args) {
             if (!onCommand(sender, args)) {
-                sender.sendMessage("/"+ getName() + " [send <player>|broadcast|pong] <message>");
+                sender.sendMessage("/"+ getName() + " [send <player>|broadcast|pong] chat|system|actionbar|title <message>");
             }
         }
 
