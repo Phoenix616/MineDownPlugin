@@ -134,7 +134,7 @@ public final class MineDownPlugin extends Plugin {
         Set<CommandSender> receivers = new HashSet<>();
         if ("pong".equalsIgnoreCase(args[0])) {
             receivers.add(sender);
-        } else if ("send".equalsIgnoreCase(args[0])) {
+        } else if ("send".equalsIgnoreCase(args[0]) || "tell".equalsIgnoreCase(args[0])) {
             if (args.length < 2) {
                 return false;
             }
@@ -155,8 +155,9 @@ public final class MineDownPlugin extends Plugin {
         }
 
         Target target = TARGETS.get(args[nextIndex].toLowerCase());
-        if (target != null) {
-            return false;
+        if (target == null) {
+            target = TARGETS.get("system");
+            nextIndex--;
         }
         if (testPermission(sender, "minedown.command." + args[0].toLowerCase() + "." + args[nextIndex].toLowerCase())) {
             String message = Arrays.stream(args).skip(nextIndex + 1).collect(Collectors.joining(" "));

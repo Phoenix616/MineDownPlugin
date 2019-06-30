@@ -10,7 +10,7 @@ commands:
     aliases: ["md"]
     description: MineDown command.
     permission: minedown.command
-    usage: /<command> [send <player>|broadcast|pong] chat|system|actionbar|title <message>
+    usage: /<command> [send <player>|broadcast|pong] [chat|system|actionbar|title] <message>
     permission-message: Missing permission <permission>
 permissions:
   minedown.command:
