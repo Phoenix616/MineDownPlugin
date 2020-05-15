@@ -1,5 +1,5 @@
 # MineDownPlugin
-A plugin that adds a command to send [MineDown](https://github.com/MineDown) formatted messages on Spigot or BungeeCord!
+A plugin that adds a command to send [MineDown](https://github.com/Phoenix616/MineDown) formatted messages on Spigot or BungeeCord!
 
 MineDOwn is a custom mark up syntax which is loosely based on MarkDown that adds the ability to use the full power of
 component messages with the same simplicity as legacy formatting codes. (Which it can still support!)
