@@ -1,13 +1,12 @@
-# MineDownPlugin
-A plugin that adds a command to send [MineDown](https://github.com/Phoenix616/MineDown) formatted messages on Spigot or BungeeCord!
+# MineDownAdventurePlugin
+A plugin that adds a command to send [MineDown](https://github.com/Phoenix616/MineDown/tree/kyori-adventure) formatted
+messages on Bukkit or BungeeCord using kyori-adventure adapters!
 
 MineDOwn is a custom mark up syntax which is loosely based on MarkDown that adds the ability to use the full power of
 component messages with the same simplicity as legacy formatting codes. (Which it can still support!)
 It also includes a way to directly replace placeholders in the messages, both string based and component based ones!
 
-This requires BungeeCord's chat API so it will only work on **Spigot** or **BungeeCord**!
-
-See this overview of the [MineDown syntax](https://github.com/Phoenix616/MineDown#syntax) to get some idea what's
+See this overview of the [MineDown syntax](https://github.com/Phoenix616/MineDown/tree/kyori-adventure#syntax) to get some idea what's
 possible with the commands!
 
 ## Commands
@@ -46,7 +45,7 @@ Both commands and permissions are the same on Bungee or Spigot
 
 ## Downloads
 
-Downloads are currently available on the [Minebench.de jenkins](https://ci.minebench.de/job/MineDownPlugin).
+Downloads are currently available on the [Minebench.de jenkins](https://ci.minebench.de/job/MineDownAdventurePlugin).
 
 ## License
 

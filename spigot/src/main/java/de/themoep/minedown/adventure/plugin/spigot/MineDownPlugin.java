@@ -1,7 +1,7 @@
-package de.themoep.minedown.plugin.spigot;
+package de.themoep.minedown.adventure.plugin.spigot;
 
 /*
- * Copyright (c) 2019 Max Lee (https://github.com/Phoenix616)
+ * Copyright (c) 2020 Max Lee (https://github.com/Phoenix616)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,10 +23,12 @@ package de.themoep.minedown.plugin.spigot;
  */
 
 import com.google.common.collect.ImmutableSet;
-import de.themoep.minedown.MineDown;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.TextComponent;
+import de.themoep.minedown.adventure.MineDown;
+import net.kyori.adventure.audience.MessageType;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.title.Title;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
@@ -43,73 +45,68 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public final class MineDownPlugin extends JavaPlugin {
+
+    private static BukkitAudiences audiences;
+
     private static final Set<String> SUB_COMMANDS = ImmutableSet.of(
             "pong", "send", "broadcast"
     );
     private static final Map<String, Target> TARGETS = new LinkedHashMap<>();
     static {
         TARGETS.put("chat", (sender, receiver, message) -> {
-            BaseComponent[] components = MineDown.parse(message,
+            audiences.audience(receiver).sendMessage(MineDown.parse(message,
                     "sender", sender.getName(),
                     "receiver", receiver.getName()
-            );
-            if (receiver instanceof Player) {
-                ((Player) receiver).spigot().sendMessage(ChatMessageType.CHAT, components);
-            } else {
-                receiver.spigot().sendMessage(components);
-            }
+            ), MessageType.CHAT);
         });
         TARGETS.put("system", (sender, receiver, message) -> {
-            BaseComponent[] components = MineDown.parse(message,
+            audiences.audience(receiver).sendMessage(MineDown.parse(message,
                     "sender", sender.getName(),
                     "receiver", receiver.getName()
-            );
-            if (receiver instanceof Player) {
-                ((Player) receiver).spigot().sendMessage(ChatMessageType.SYSTEM, components);
-            } else {
-                receiver.spigot().sendMessage(components);
-            }
+            ), MessageType.SYSTEM);
         });
         TARGETS.put("actionbar", (sender, receiver, message) -> {
             if (receiver instanceof Player) {
-                ((Player) receiver).spigot().sendMessage(ChatMessageType.ACTION_BAR, MineDown.parse(message,
+                audiences.player((Player) receiver).sendActionBar(MineDown.parse(message,
                         "sender", sender.getName(),
                         "receiver", receiver.getName()
                 ));
             } else {
-                receiver.spigot().sendMessage(MineDown.parse("Actionbar: " + message,
+                audiences.audience(receiver).sendMessage(MineDown.parse("Actionbar: " + message,
                         "sender", sender.getName(),
                         "receiver", receiver.getName()
                 ));
             }
         });
         TARGETS.put("title", (sender, receiver, message) -> {
-            String subTitle = "";
+            String subTitleMessage = "";
             int subTitleIndex = message.indexOf("{SUBTITLE}");
             if (subTitleIndex > -1) {
-                subTitle = message.substring(subTitleIndex + "{SUBTITLE}".length());
+                subTitleMessage = message.substring(subTitleIndex + "{SUBTITLE}".length());
                 message = message.substring(0, subTitleIndex);
             }
             if (receiver instanceof Player) {
-                ((Player) receiver).sendTitle(
-                        TextComponent.toLegacyText(MineDown.parse(message,
-                                "sender", sender.getName(),
-                                "receiver", receiver.getName()
-                        )),
-                        TextComponent.toLegacyText(MineDown.parse(subTitle,
-                                "sender", sender.getName(),
-                                "receiver", receiver.getName()
-                        )),
-                        20,
-                        40,
-                        20
-                );
+                Component title = TextComponent.empty();
+                if (!message.isEmpty()) {
+                    title = MineDown.parse(message,
+                            "sender", sender.getName(),
+                            "receiver", receiver.getName()
+                    );
+                }
+                Component subTitle = TextComponent.empty();
+                if (!subTitleMessage.isEmpty()) {
+                    subTitle = MineDown.parse(subTitleMessage,
+                            "sender", sender.getName(),
+                            "receiver", receiver.getName()
+                    );
+                }
+                audiences.player((Player) receiver).showTitle(Title.of(title, subTitle));
             } else {
-                sender.spigot().sendMessage(MineDown.parse("Title: "+ message,
+                audiences.audience(sender).sendMessage(MineDown.parse("Title: "+ message,
                         "sender", sender.getName(),
                         "receiver", receiver.getName()
                 ));
-                sender.spigot().sendMessage(MineDown.parse("Subtitle: "+ subTitle,
+                audiences.audience(sender).sendMessage(MineDown.parse("Subtitle: "+ subTitleMessage,
                         "sender", sender.getName(),
                         "receiver", receiver.getName()
                 ));

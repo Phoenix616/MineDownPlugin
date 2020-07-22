@@ -1,4 +1,4 @@
-name: MineDownPlugin
+name: MineDownAdventurePlugin
 version: '${minecraft.plugin.version}'
 main: de.themoep.minedown.plugin.bungee.MineDownPlugin
 author: Phoenix616

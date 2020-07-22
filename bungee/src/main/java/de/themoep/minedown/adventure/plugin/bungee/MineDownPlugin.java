@@ -1,7 +1,7 @@
-package de.themoep.minedown.plugin.bungee;
+package de.themoep.minedown.adventure.plugin.bungee;
 
 /*
- * Copyright (c) 2019 Max Lee (https://github.com/Phoenix616)
+ * Copyright (c) 2020 Max Lee (https://github.com/Phoenix616)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,13 @@ package de.themoep.minedown.plugin.bungee;
  */
 
 import com.google.common.collect.ImmutableSet;
-import de.themoep.minedown.MineDown;
-import net.md_5.bungee.api.ChatMessageType;
+import de.themoep.minedown.adventure.MineDown;
+import net.kyori.adventure.audience.MessageType;
+import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.title.Title;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.Title;
-import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -43,74 +44,68 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public final class MineDownPlugin extends Plugin {
+
+    private static BungeeAudiences audiences;
+
     private static final Set<String> SUB_COMMANDS = ImmutableSet.of(
             "pong", "send", "broadcast"
     );
     private static final Map<String, Target> TARGETS = new LinkedHashMap<>();
     static {
         TARGETS.put("chat", (sender, receiver, message) -> {
-            BaseComponent[] components = MineDown.parse(message,
+            audiences.audience(receiver).sendMessage(MineDown.parse(message,
                     "sender", sender.getName(),
                     "receiver", receiver.getName()
-            );
-            if (receiver instanceof ProxiedPlayer) {
-                ((ProxiedPlayer) receiver).sendMessage(ChatMessageType.CHAT, components);
-            } else {
-                receiver.sendMessage(components);
-            }
+            ), MessageType.CHAT);
         });
         TARGETS.put("system", (sender, receiver, message) -> {
-            BaseComponent[] components = MineDown.parse(message,
+            audiences.audience(receiver).sendMessage(MineDown.parse(message,
                     "sender", sender.getName(),
                     "receiver", receiver.getName()
-            );
-            if (receiver instanceof ProxiedPlayer) {
-                ((ProxiedPlayer) receiver).sendMessage(ChatMessageType.SYSTEM, components);
-            } else {
-                receiver.sendMessage(components);
-            }
+            ), MessageType.SYSTEM);
         });
         TARGETS.put("actionbar", (sender, receiver, message) -> {
             if (receiver instanceof ProxiedPlayer) {
-                ((ProxiedPlayer) receiver).sendMessage(ChatMessageType.ACTION_BAR, MineDown.parse(message,
+                audiences.player((ProxiedPlayer) receiver).sendActionBar(MineDown.parse(message,
                         "sender", sender.getName(),
                         "receiver", receiver.getName()
                 ));
             } else {
-                receiver.sendMessage(MineDown.parse("Actionbar: " + message,
+                audiences.audience(receiver).sendMessage(MineDown.parse("Actionbar: " + message,
                         "sender", sender.getName(),
                         "receiver", receiver.getName()
                 ));
             }
         });
         TARGETS.put("title", (sender, receiver, message) -> {
-            String subTitle = "";
+            String subTitleMessage = "";
             int subTitleIndex = message.indexOf("{SUBTITLE}");
             if (subTitleIndex > -1) {
-                subTitle = message.substring(subTitleIndex + "{SUBTITLE}".length());
+                subTitleMessage = message.substring(subTitleIndex + "{SUBTITLE}".length());
                 message = message.substring(0, subTitleIndex);
             }
             if (receiver instanceof ProxiedPlayer) {
-                Title title = ProxyServer.getInstance().createTitle();
+                Component title = TextComponent.empty();
                 if (!message.isEmpty()) {
-                    title.title(MineDown.parse(message,
+                    title = MineDown.parse(message,
                             "sender", sender.getName(),
                             "receiver", receiver.getName()
-                    ));
+                    );
                 }
-                if (!subTitle.isEmpty()) {
-                    title.subTitle(MineDown.parse(subTitle,
+                Component subTitle = TextComponent.empty();
+                if (!subTitleMessage.isEmpty()) {
+                    subTitle = MineDown.parse(subTitleMessage,
                             "sender", sender.getName(),
                             "receiver", receiver.getName()
-                    ));
+                    );
                 }
-                title.send((ProxiedPlayer) receiver);
+                audiences.player((ProxiedPlayer) receiver).showTitle(Title.of(title, subTitle));
             } else {
-                sender.sendMessage(MineDown.parse("Title: "+ message,
+                audiences.audience(sender).sendMessage(MineDown.parse("Title: "+ message,
                         "sender", sender.getName(),
                         "receiver", receiver.getName()
                 ));
-                sender.sendMessage(MineDown.parse("Subtitle: "+ subTitle,
+                audiences.audience(sender).sendMessage(MineDown.parse("Subtitle: "+ subTitleMessage,
                         "sender", sender.getName(),
                         "receiver", receiver.getName()
                 ));
@@ -120,6 +115,7 @@ public final class MineDownPlugin extends Plugin {
 
     @Override
     public void onEnable() {
+        audiences = BungeeAudiences.create(this);
         getProxy().getPluginManager().registerCommand(this, new MineDownCommand());
     }
 

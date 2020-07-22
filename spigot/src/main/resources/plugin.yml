@@ -1,4 +1,4 @@
-name: MineDownPlugin
+name: MineDownAdventurePlugin
 version: '${minecraft.plugin.version}'
 main: de.themoep.minedown.plugin.spigot.MineDownPlugin
 api-version: 1.13
