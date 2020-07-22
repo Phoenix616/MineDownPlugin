@@ -115,6 +115,11 @@ public final class MineDownPlugin extends JavaPlugin {
     }
 
     @Override
+    public void onEnable() {
+        audiences = BukkitAudiences.create(this);
+    }
+
+    @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length == 0 || !SUB_COMMANDS.contains(args[0].toLowerCase())) {
             return false;
