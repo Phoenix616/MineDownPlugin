@@ -33,6 +33,12 @@
             <artifactId>minedown-adventure</artifactId>
             <version>${minedown.version}</version>
             <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>us.myles</groupId>
+                    <artifactId>viaversion-common</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
