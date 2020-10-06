@@ -53,13 +53,13 @@ public final class MineDownPlugin extends Plugin {
     private static final Map<String, Target> TARGETS = new LinkedHashMap<>();
     static {
         TARGETS.put("chat", (sender, receiver, message) -> {
-            audiences.audience(receiver).sendMessage(MineDown.parse(message,
+            audiences.sender(receiver).sendMessage(MineDown.parse(message,
                     "sender", sender.getName(),
                     "receiver", receiver.getName()
             ), MessageType.CHAT);
         });
         TARGETS.put("system", (sender, receiver, message) -> {
-            audiences.audience(receiver).sendMessage(MineDown.parse(message,
+            audiences.sender(receiver).sendMessage(MineDown.parse(message,
                     "sender", sender.getName(),
                     "receiver", receiver.getName()
             ), MessageType.SYSTEM);
@@ -71,7 +71,7 @@ public final class MineDownPlugin extends Plugin {
                         "receiver", receiver.getName()
                 ));
             } else {
-                audiences.audience(receiver).sendMessage(MineDown.parse("Actionbar: " + message,
+                audiences.sender(receiver).sendMessage(MineDown.parse("Actionbar: " + message,
                         "sender", sender.getName(),
                         "receiver", receiver.getName()
                 ));
@@ -101,11 +101,11 @@ public final class MineDownPlugin extends Plugin {
                 }
                 audiences.player((ProxiedPlayer) receiver).showTitle(Title.of(title, subTitle));
             } else {
-                audiences.audience(sender).sendMessage(MineDown.parse("Title: "+ message,
+                audiences.sender(sender).sendMessage(MineDown.parse("Title: "+ message,
                         "sender", sender.getName(),
                         "receiver", receiver.getName()
                 ));
-                audiences.audience(sender).sendMessage(MineDown.parse("Subtitle: "+ subTitleMessage,
+                audiences.sender(sender).sendMessage(MineDown.parse("Subtitle: "+ subTitleMessage,
                         "sender", sender.getName(),
                         "receiver", receiver.getName()
                 ));
