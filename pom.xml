@@ -6,7 +6,7 @@
 
     <groupId>de.themoep.minedownplugin</groupId>
     <artifactId>parent</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.1.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <description>Plugin providing commands to send MineDown messages</description>
@@ -22,7 +22,7 @@
         <minecraft.plugin.version>${project.version} ${buildDescription}</minecraft.plugin.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <minedown.version>1.6.1-SNAPSHOT</minedown.version>
+        <minedown.version>1.6.2-SNAPSHOT</minedown.version>
     </properties>
 
     <profiles>
