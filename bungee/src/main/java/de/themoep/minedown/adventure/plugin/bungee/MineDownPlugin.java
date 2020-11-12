@@ -27,7 +27,6 @@ import de.themoep.minedown.adventure.MineDown;
 import net.kyori.adventure.audience.MessageType;
 import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.title.Title;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -85,21 +84,21 @@ public final class MineDownPlugin extends Plugin {
                 message = message.substring(0, subTitleIndex);
             }
             if (receiver instanceof ProxiedPlayer) {
-                Component title = TextComponent.empty();
+                Component title = Component.empty();
                 if (!message.isEmpty()) {
                     title = MineDown.parse(message,
                             "sender", sender.getName(),
                             "receiver", receiver.getName()
                     );
                 }
-                Component subTitle = TextComponent.empty();
+                Component subTitle = Component.empty();
                 if (!subTitleMessage.isEmpty()) {
                     subTitle = MineDown.parse(subTitleMessage,
                             "sender", sender.getName(),
                             "receiver", receiver.getName()
                     );
                 }
-                audiences.player((ProxiedPlayer) receiver).showTitle(Title.of(title, subTitle));
+                audiences.player((ProxiedPlayer) receiver).showTitle(Title.title(title, subTitle));
             } else {
                 audiences.sender(sender).sendMessage(MineDown.parse("Title: "+ message,
                         "sender", sender.getName(),

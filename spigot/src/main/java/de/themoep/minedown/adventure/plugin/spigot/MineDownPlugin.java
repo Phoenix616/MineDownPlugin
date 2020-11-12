@@ -86,21 +86,21 @@ public final class MineDownPlugin extends JavaPlugin {
                 message = message.substring(0, subTitleIndex);
             }
             if (receiver instanceof Player) {
-                Component title = TextComponent.empty();
+                Component title = Component.empty();
                 if (!message.isEmpty()) {
                     title = MineDown.parse(message,
                             "sender", sender.getName(),
                             "receiver", receiver.getName()
                     );
                 }
-                Component subTitle = TextComponent.empty();
+                Component subTitle = Component.empty();
                 if (!subTitleMessage.isEmpty()) {
                     subTitle = MineDown.parse(subTitleMessage,
                             "sender", sender.getName(),
                             "receiver", receiver.getName()
                     );
                 }
-                audiences.player((Player) receiver).showTitle(Title.of(title, subTitle));
+                audiences.player((Player) receiver).showTitle(Title.title(title, subTitle));
             } else {
                 audiences.sender(sender).sendMessage(MineDown.parse("Title: "+ message,
                         "sender", sender.getName(),
