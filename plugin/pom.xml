@@ -9,7 +9,7 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>de.themoep.minedownplugin</groupId>
-        <version>1.1.2-SNAPSHOT</version>
+        <version>1.7.0-SNAPSHOT</version>
     </parent>
 
     <name>MineDownPlugin</name>
