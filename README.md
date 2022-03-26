@@ -31,16 +31,16 @@ text after it will be shown as the subtitle.
 
 All commands have permissions:
 
-| Permission                            | Description                   |
-|---------------------------------------|-------------------------------|
-| minedown.command                      | Command permission            |
-| minedown.command.pong                 | Pong action permission        |
-| minedown.command.send                 | Send action permission        |
-| minedown.command.broadcast            | Broadcast action permission   |
-| minedown.command.<action>.chat        | Chat target permission        |
-| minedown.command.<action>.system      | System target permission      |
-| minedown.command.<action>.actionbar   | Actionbar target permission   |
-| minedown.command.<action>.title       | Title target permission       |
+| Permission                              | Description                   |
+|-----------------------------------------|-------------------------------|
+| `minedown.command`                      | Command permission            |
+| `minedown.command.pong`                 | Pong action permission        |
+| `minedown.command.send`                 | Send action permission        |
+| `minedown.command.broadcast`            | Broadcast action permission   |
+| `minedown.command.<action>.chat`        | Chat target permission        |
+| `minedown.command.<action>.system`      | System target permission      |
+| `minedown.command.<action>.actionbar`   | Actionbar target permission   |
+| `minedown.command.<action>.title`       | Title target permission       |
 
 Both commands and permissions are the same on Bungee or Spigot
 
