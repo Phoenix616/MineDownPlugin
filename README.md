@@ -2,7 +2,7 @@
 A plugin that adds a command to send [MineDown](https://github.com/Phoenix616/MineDown/tree/kyori-adventure) formatted
 messages on Bukkit or BungeeCord using kyori-adventure adapters!
 
-MineDOwn is a custom mark up syntax which is loosely based on MarkDown that adds the ability to use the full power of
+MineDown is a custom mark up syntax which is loosely based on MarkDown that adds the ability to use the full power of
 component messages with the same simplicity as legacy formatting codes. (Which it can still support!)
 It also includes a way to directly replace placeholders in the messages, both string based and component based ones!
 
