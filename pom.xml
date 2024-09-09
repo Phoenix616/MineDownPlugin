@@ -6,13 +6,15 @@
 
     <groupId>de.themoep.minedownadventureplugin</groupId>
     <artifactId>parent</artifactId>
-    <version>1.7.1-SNAPSHOT</version>
+    <version>1.7.3-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <name>MineDownAdventurePlugin-parent</name>
 
     <description>Plugin providing commands to send MineDown messages</description>
 
     <modules>
         <module>spigot</module>
+        <module>paper</module>
         <module>bungee</module>
         <module>plugin</module>
     </modules>
@@ -64,7 +66,7 @@
             <groupId>de.themoep</groupId>
             <artifactId>minedown-adventure</artifactId>
             <version>${minedown.version}</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
             <exclusions>
                 <exclusion>
                     <groupId>us.myles</groupId>

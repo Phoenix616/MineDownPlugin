@@ -9,7 +9,7 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>de.themoep.minedownadventureplugin</groupId>
-        <version>1.7.1-SNAPSHOT</version>
+        <version>1.7.3-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -24,7 +24,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>spigot</artifactId>
+            <artifactId>paper</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
@@ -56,14 +56,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.1.1</version>
-                <configuration>
-                    <relocations>
-                        <relocation>
-                            <pattern>net.kyori</pattern>
-                            <shadedPattern>de.themoep.minedown.adventure.plugin.kyori</shadedPattern>
-                        </relocation>
-                    </relocations>
-                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
