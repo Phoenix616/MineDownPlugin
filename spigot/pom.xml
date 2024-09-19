@@ -6,7 +6,6 @@
 
     <artifactId>spigot</artifactId>
     <packaging>jar</packaging>
-    <name>MineDownAdventurePlugin-spigot</name>
 
     <parent>
         <groupId>de.themoep.minedownadventureplugin</groupId>
@@ -52,7 +51,6 @@
     </dependencies>
 
     <build>
-        <finalName>${project.name}</finalName>
         <resources>
             <resource>
                 <filtering>true</filtering>

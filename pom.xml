@@ -13,10 +13,11 @@
     <description>Plugin providing commands to send MineDown messages</description>
 
     <modules>
-        <module>spigot</module>
         <module>paper</module>
-        <module>bungee</module>
         <module>plugin</module>
+        <module>spigot</module>
+        <module>bungee</module>
+        <module>plugin-platform</module>
     </modules>
 
     <properties>
