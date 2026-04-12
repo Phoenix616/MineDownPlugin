@@ -10,7 +10,7 @@
     <parent>
         <groupId>de.themoep.minedownadventureplugin</groupId>
         <artifactId>parent</artifactId>
-        <version>1.7.3-SNAPSHOT</version>
+        <version>1.7.6-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -39,7 +39,7 @@
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-platform-bukkit</artifactId>
-            <version>4.3.4</version>
+            <version>4.4.2-SNAPSHOT</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
@@ -61,7 +61,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>3.6.1</version>
                 <configuration>
                     <relocations>
                         <relocation>

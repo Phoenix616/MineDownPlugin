@@ -6,7 +6,7 @@
 
     <groupId>de.themoep.minedownadventureplugin</groupId>
     <artifactId>parent</artifactId>
-    <version>1.7.3-SNAPSHOT</version>
+    <version>1.7.6-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>MineDownAdventurePlugin-parent</name>
 

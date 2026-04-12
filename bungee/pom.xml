@@ -10,7 +10,7 @@
     <parent>
         <groupId>de.themoep.minedownadventureplugin</groupId>
         <artifactId>parent</artifactId>
-        <version>1.7.3-SNAPSHOT</version>
+        <version>1.7.6-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -35,7 +35,7 @@
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-platform-bungeecord</artifactId>
-            <version>4.3.4</version>
+            <version>4.4.1</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

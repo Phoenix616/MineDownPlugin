@@ -9,7 +9,7 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>de.themoep.minedownadventureplugin</groupId>
-        <version>1.7.3-SNAPSHOT</version>
+        <version>1.7.6-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -42,7 +42,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>3.6.1</version>
                 <configuration>
                     <relocations>
                         <relocation>
