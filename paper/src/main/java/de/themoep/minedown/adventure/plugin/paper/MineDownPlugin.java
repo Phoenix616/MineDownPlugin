@@ -24,7 +24,7 @@ package de.themoep.minedown.adventure.plugin.paper;
 
 import com.google.common.collect.ImmutableSet;
 import de.themoep.minedown.adventure.MineDown;
-import net.kyori.adventure.audience.MessageType;
+import net.kyori.adventure.chat.ChatType;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.command.Command;
@@ -53,17 +53,17 @@ public final class MineDownPlugin extends JavaPlugin {
             receiver.sendMessage(MineDown.parse(message,
                     "sender", sender.getName(),
                     "receiver", receiver.getName()
-            ), MessageType.CHAT);
+            ), ChatType.CHAT.bind(sender.name()));
         });
         TARGETS.put("system", (sender, receiver, message) -> {
             receiver.sendMessage(MineDown.parse(message,
                     "sender", sender.getName(),
                     "receiver", receiver.getName()
-            ), MessageType.SYSTEM);
+            ));
         });
         TARGETS.put("actionbar", (sender, receiver, message) -> {
             if (receiver instanceof Player) {
-                ((Player) receiver).sendActionBar(MineDown.parse(message,
+                receiver.sendActionBar(MineDown.parse(message,
                         "sender", sender.getName(),
                         "receiver", receiver.getName()
                 ));
